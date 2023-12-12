@@ -1,4 +1,20 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 export default function StudentList() {
+  const [students, setStudents] = useState();
+
+
+  useEffect(() => {
+    setStudents(JSON.parse(localStorage.getItem('students')) ?? []);
+  }, []);
+
+  console.log(students);
+
+  if (students === undefined) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <table className="table table-hover">
       <thead>
@@ -11,22 +27,26 @@ export default function StudentList() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>
-            <a href="#">Jaime</a>
-          </th>
-          <td>Kado</td>
-          <td>65</td>
-          <td>2</td>
-          <td>
-            <span className="btn btn-sm btn-primary me-1" title="Editar">
-              <i className="ri-pencil-line" />
-            </span>
-            <span className="btn btn-sm btn-danger" title="Eliminar">
-              <i className="ri-delete-bin-line" />
-            </span>
-          </td>
-        </tr>
+        {students?.map((student) => (
+          <tr key={student.id}>
+            <th>
+              <Link to={`/actualizar-alumno/${student.id}`}>
+                {student.name}
+              </Link>
+            </th>
+            <td>{student.surname}</td>
+            <td>{student.age}</td>
+            <td>{student.courses.length}</td>
+            <td>
+              <span className="btn btn-sm btn-primary me-1" title="Editar">
+                <i className="ri-pencil-line" />
+              </span>
+              <span className="btn btn-sm btn-danger" title="Eliminar">
+                <i className="ri-delete-bin-line" />
+              </span>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

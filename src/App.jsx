@@ -1,5 +1,7 @@
+import { Link, Route, Routes } from 'react-router-dom';
 import StudentAdd from './components/StudentAdd';
 import StudentList from './components/StudentList';
+import StudentUpdate from './components/StudentUpdate';
 
 function App() {
   return (
@@ -12,18 +14,18 @@ function App() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active"  href="#">
+                <Link className="nav-link active" to="/">
                   Listado
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/nuevo-alumno">
                   Nuevo Alumno
-                </a>
+                </Link>
               </li>
             </ul>
             <span className="">
-              <a className="nav-link"  href="#">
+              <a className="nav-link" href="#">
                 Mi cuenta
               </a>
             </span>
@@ -31,8 +33,11 @@ function App() {
         </div>
       </nav>
       <div className="container mt-5">
-        <StudentList />
-        {/* <StudentAdd /> */}
+        <Routes>
+          <Route path="/" element={<StudentList />} />
+          <Route path="/nuevo-alumno" element={<StudentAdd />} />
+          <Route path="/actualizar-alumno/:studentId" element={<StudentUpdate />} />
+        </Routes>
       </div>
     </>
   );
